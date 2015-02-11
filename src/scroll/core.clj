@@ -1,7 +1,10 @@
 (ns scroll.core
   (:require [clojure.string :as -s]))
 
+(defn sanitize [text] (-s/replace text #"\"|<|>" {"\"" "&quot;" "<" "&lt;" ">" "&gt;"}))
+  
 (defn html [& elements]
+  (def void-tags #{:!DOCTYPE :area :base :br :col :command :embed :hr :img :input :keygen :link :meta :param :source :track :wbr})
 
   (defn render-inner [i]
     (if (seq? i) (-s/join (map html i)) ""))   
@@ -13,10 +16,14 @@
         :else (if v (str " " (name a)))))
       (-s/join (map render-attr a)))  
 
-  (defn render-html [t a i] (str \< t a \> i \<\/ t \>))
+  (defn render-html [tag a i]
+    (let [t (name tag)]
+      (if (contains? void-tags tag)
+        (str \< t a \>)
+        (str \< t a \> i \<\/ t \>))))
 
   (defn render-tag [e]
-    (let [tag (name (first e))
+    (let [tag (first e)
           attrs-inner (seq (rest e))]
       (if (map? (first attrs-inner))
         (render-html tag
@@ -33,6 +40,3 @@
       (seq? element) (-s/join (map render element))))
 
   (-s/join (map render elements)))
-
-
-

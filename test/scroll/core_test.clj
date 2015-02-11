@@ -7,10 +7,13 @@
     (is (= (html [:div "Hello!"]) "<div>Hello!</div>"))
     (is (= (html [:div {:class "header"}]) "<div class=\"header\"></div>"))
     (is (= (html [:div {:class "header" :data-spam "eggs"}]) "<div class=\"header\" data-spam=\"eggs\"></div>"))
-    (is (= (html [:input {:type "checkbox" :checked true}]) "<input type=\"checkbox\" checked></input>"))
-    (is (= (html [:input {:type "checkbox" :checked false}]) "<input type=\"checkbox\"></input>"))    
-    ;;  (is (= (html [:input {:type "checkbox" :checked true}]) "<input type=\"checkbox\" checked>")) + <br/> + <p></p> = <p/> etc...    
-    ;; + sanitize?
+    (is (= (html [:input {:type "checkbox" :checked true}]) "<input type=\"checkbox\" checked>"))
+    (is (= (html [:input {:type "checkbox" :checked false}]) "<input type=\"checkbox\">"))    
+    (is (= (html [:br]) "<br>"))
+    (is (= (html [:br "hello"]) "<br>"))
+    (is (= (html [:!DOCTYPE {:html true}]) "<!DOCTYPE html>"))
+    (is (= (html [:br "hello"]) "<br>"))
+    (is (= (html [:span (sanitize "\"<>")]) "<span>&quot;&lt;&gt;</span>"))
     (is (= (html [:div {:class "header" :data-spam "eggs"} "Want some spam?"]
                  "spam"
                  " and spam"
