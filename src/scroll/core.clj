@@ -37,6 +37,6 @@
     (cond
       (string? element) element
       (vector? element) (render-tag element)
-      (seq? element) (-s/join (map render element))))
+      (seq? element) (html element)))
 
   (-s/join (map render elements)))
