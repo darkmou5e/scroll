@@ -20,5 +20,4 @@ For more examples see [tests](https://github.com/mouzzz/scroll/blob/master/test/
 
 Copyright © 2015 Anton Bezrukov
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License either version 1.0
